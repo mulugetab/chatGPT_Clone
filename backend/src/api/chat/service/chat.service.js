@@ -34,12 +34,12 @@ const generateAssistanceAnswer = async ({question, historyRows}) => {
 
     const chat = geminiClient.chats.create({
         model: GEMINI_MODEL,
-        config: {
+        // config: {
     
-        },
+        // },
         history: formatHistory,
     })
-
+//console.log("question:", question);
     const result = await chat.sendMessage({message: question});
     return {
         text: result.text,
