@@ -7,7 +7,7 @@ import ChatInput from './components/ChatInput/ChatInput';
 import './App.css';
 
 // const API_BASE_URL = 'http://localhost:9999/api'; // Update this to your backend API base URL
-const API_BASE_URL = 'https://chatgpt-clone-oa2l.onrender.com/api';
+const API_BASE_URL = 'https://chatgpt-clone-rz9y.onrender.com/api'; // Update this to your backend API base URL
 
 
 function App() {
