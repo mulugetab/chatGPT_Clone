@@ -4,6 +4,7 @@ import { createConversationService,getRecentConversationsRows } from '../service
 export async function createConversationsController(req,res,next){
     try {
         const {question} = req.body;
+        console.log("question:", question);
         const result = await createConversationService(question);
         res.status(200).json({ 
             success: true, 

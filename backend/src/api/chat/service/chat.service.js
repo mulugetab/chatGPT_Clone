@@ -14,6 +14,7 @@ export const getRecentConversationsRows = async (limit=5) => {
         ORDER BY id DESC 
         LIMIT ${safeLimit}`,
     );
+    console.log("rows:", rows);
     return rows.reverse();
 };
 
@@ -26,6 +27,8 @@ const getMessageById = async (id) => {
 };
 
 const generateAssistanceAnswer = async ({question, historyRows}) => {
+    console.log("question:", question);
+    console.log("historyRows:", historyRows);
 
     const formatHistory = historyRows.map(row => ({
         role: row.role === 'assistant' ? 'model' : 'user',
