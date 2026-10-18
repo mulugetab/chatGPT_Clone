@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS conversation (
+CREATE TABLE IF NOT EXISTS conversations (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     role ENUM('user', 'assistant') NOT NULL,
     content TEXT NOT NULL,

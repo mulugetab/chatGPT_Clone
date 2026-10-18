@@ -10,7 +10,7 @@ export const getRecentConversationsRows = async (limit=5) => {
     const normalizedLimit = Number.parseInt(limit, 10);
     const safeLimit = Number.isNaN(normalizedLimit) ? 5 : normalizedLimit;
     const [rows] = await db.execute(
-        `SELECT id, content ,role ,created_at FROM conversation
+        `SELECT id, content ,role ,created_at FROM conversations
         ORDER BY id DESC 
         LIMIT ${safeLimit}`,
     );
@@ -20,7 +20,7 @@ export const getRecentConversationsRows = async (limit=5) => {
 
 const getMessageById = async (id) => {
     const [rows] = await db.execute(
-        'SELECT id, content, role, token_count, created_at FROM conversation WHERE id = ?',
+        'SELECT id, content, role, token_count, created_at FROM conversations WHERE id = ?',
         [id],
     );
     return rows[0];
@@ -64,14 +64,14 @@ export async function createConversationService(question){
     // console.log("historyRows:", historyRows);
 
     const [result] = await db.execute(
-        'INSERT INTO conversation (content,role) VALUES (?, "user")',
+        'INSERT INTO conversations (content,role) VALUES (?, "user")',
         [normalizedQuestion]
     );
 
     const { text, totalTokens } = await generateAssistanceAnswer({ question: normalizedQuestion, historyRows });
 
     const [createAssistantMessageResult] = await db.execute(
-        'INSERT INTO conversation (role,content,token_count) VALUES (?, ?, ?)',
+        'INSERT INTO conversations (role,content,token_count) VALUES (?, ?, ?)',
         ['assistant', text, totalTokens]
     );
     const userConversationId = await getMessageById(result.insertId);
