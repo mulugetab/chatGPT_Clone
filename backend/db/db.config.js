@@ -1,19 +1,24 @@
-import mysql from 'mysql2/promise'
+import mysql from "mysql2";
+import dotenv from "dotenv";
 
-const ssl = process.env.DB_SSL === 'true'
-    ? {
-        minVersion: 'TLSv1.2',
-        rejectUnauthorized: true
-    }
-    : undefined
+dotenv.config();
 
-const db = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-     ...(ssl && { ssl })
-})
+export const db = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: Number(process.env.DB_PORT) || 4000,
+
+  // Required for a secure TiDB Cloud connection
+  ssl: {
+    minVersion: "TLSv1.2",
+  },
+
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
 
 
 export default db;
